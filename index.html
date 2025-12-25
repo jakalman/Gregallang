@@ -1,68 +1,715 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gregallang - 애플리케이션 세계관</title>
-    <style>
-        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; margin: 0; color: #333; background: #fcfcfc; }
-        header { background: #1a1a1a; color: white; padding: 60px 20px; text-align: center; }
-        header h1 { margin: 0; font-size: 2.5em; letter-spacing: 2px; }
-        header p { margin-top: 10px; opacity: 0.8; }
-        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eee; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card h3 { margin-top: 0; color: #0056b3; }
-        .tag { display: inline-block; background: #e7f1ff; color: #0056b3; padding: 2px 10px; border-radius: 20px; font-size: 0.8em; margin-bottom: 10px; }
-        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9em; }
-        .links { margin-top: 20px; }
-        .links a { color: #888; text-decoration: none; margin: 0 10px; }
-        .links a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
+import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { GodCard } from './components/GodCard';
 
-<header>
-    <h1>GREGALLANG</h1>
-    <p>임원택 개발자가 만들어가는 애플리케이션들의 유니버스</p>
-</header>
+export default function App() {
+  const [syncCount, setSyncCount] = useState(0);
+  const backgroundTexture = 'https://images.unsplash.com/photo-1599054802207-91d346adc120?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjeWFuJTIwdHVycXVvaXNlJTIwd2F2ZSUyMGFic3RyYWN0fGVufDF8fHx8MTc2NjYzMzY2M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral';
 
-<div class="container">
-    <div class="grid">
-        <div class="card">
-            <span class="tag">Digital Detox</span>
-            <h3>시마 (SIMA)</h3>
-            <p>열정과 컨디션을 관리하고, AI가 제안하는 전략으로 디지털 중독에서 벗어나는 치료적 가이드.</p>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSyncCount((prev) => (prev < 10 ? prev + 1 : prev));
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen bg-[#151B26] overflow-x-hidden">
+      {/* Background texture overlay */}
+      <div
+        className="fixed inset-0 opacity-30 mix-blend-screen pointer-events-none"
+        style={{
+          backgroundImage: `url(${backgroundTexture})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
+      {/* Noise texture */}
+      <div className="fixed inset-0 opacity-[0.05] pointer-events-none">
+        <svg className="w-full h-full">
+          <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise)" />
+        </svg>
+      </div>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center px-6">
+        {/* Floating geometric lines */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent"
+              style={{
+                width: `${Math.random() * 300 + 100}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                x: [0, Math.random() * 100 - 50],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 5,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            />
+          ))}
         </div>
 
-        <div class="card">
-            <span class="tag">Portfolio</span>
-            <h3>폴셰 (POLSHE)</h3>
-            <p>자신만의 프로젝트와 커리어를 체계적으로 관리하고 시각화하는 포트폴리오 관리 앱.</p>
-        </div>
+        <div className="relative z-10 text-center max-w-4xl">
+          {/* Central orb/core */}
+          <motion.div
+            className="mx-auto mb-16 relative"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            <div className="relative w-64 h-64 mx-auto">
+              {/* Outer rings */}
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="absolute inset-0 rounded-full border"
+                  style={{
+                    borderColor: i === 0 ? '#00CED1' : i === 1 ? '#FFD700' : '#00CED1',
+                  }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                    rotate: i % 2 === 0 ? 360 : -360,
+                  }}
+                  transition={{
+                    duration: 4 + i * 2,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+                />
+              ))}
 
-        <div class="card">
-            <span class="tag">Ritual Editor</span>
-            <h3>온 (ON)</h3>
-            <p>플로우차트 다이어그램 기반의 의식(Ritual) 편집기. 삶의 루틴을 설계합니다.</p>
-        </div>
+              {/* Core sphere */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, #00CED180, #151B26)',
+                  boxShadow: '0 0 80px #00CED150, inset 0 0 60px #00CED130',
+                }}
+                animate={{
+                  boxShadow: [
+                    '0 0 80px #00CED150, inset 0 0 60px #00CED130',
+                    '0 0 120px #00CED170, inset 0 0 80px #00CED150',
+                    '0 0 80px #00CED150, inset 0 0 60px #00CED130',
+                  ],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
 
-        <div class="card">
-            <span class="tag">Therapeutics</span>
-            <h3>그리토스 (GRITOS)</h3>
-            <p>무너지기 전, 심리기법을 통해 마음을 지탱해주는 디지털 치료제 시스템.</p>
+              {/* Inner glow particles */}
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 rounded-full bg-cyan-400"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                  }}
+                  animate={{
+                    x: [0, Math.cos((i * Math.PI * 2) / 12) * 80],
+                    y: [0, Math.sin((i * Math.PI * 2) / 12) * 80],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            className="mb-6"
+            style={{
+              fontFamily: 'MedievalSharp, serif',
+              color: '#FFD700',
+              textShadow: '0 0 20px #FFD70050',
+              letterSpacing: '0.05em',
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            스트러글러여, 성소에 온 것을 환영한다.
+          </motion.h1>
+
+          {/* Subheadline with counter */}
+          <motion.p
+            className="mb-12 text-cyan-400"
+            style={{
+              fontFamily: 'Orbitron, sans-serif',
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            {syncCount}명의 아웃로어들과 동기화 초기화 중...
+          </motion.p>
+
+          {/* CTA Button */}
+          <motion.button
+            className="relative px-12 py-4 overflow-hidden group"
+            style={{
+              fontFamily: 'MedievalSharp, serif',
+              background: 'linear-gradient(135deg, #00CED120, #FFD70020)',
+              border: '2px solid #FFD700',
+              borderRadius: '4px',
+              color: '#FFD700',
+              boxShadow: '0 0 20px #FFD70030',
+              letterSpacing: '0.1em',
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 40px #FFD70050' }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-yellow-500/20"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: '100%' }}
+              transition={{ duration: 0.6 }}
+            />
+            <span className="relative z-10">의식 시작하기</span>
+          </motion.button>
         </div>
+      </section>
+
+      {/* Narrative Section - Two Worlds */}
+      <section className="relative py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.h2
+            className="text-center mb-20"
+            style={{
+              fontFamily: 'MedievalSharp, serif',
+              color: '#FFD700',
+              letterSpacing: '0.05em',
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            두 세계의 경계에서
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Chaos - Kingdom of Difficulty */}
+            <motion.div
+              className="relative p-8 rounded-lg backdrop-blur-xl"
+              style={{
+                background: 'linear-gradient(135deg, #8B000020, #4B000020)',
+                border: '1px solid #DC143C40',
+              }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                <motion.div
+                  className="absolute inset-0"
+                  animate={{
+                    backgroundPosition: ['0% 0%', '100% 100%'],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    repeatType: 'reverse',
+                  }}
+                  style={{
+                    background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #DC143C10 10px, #DC143C10 20px)',
+                  }}
+                />
+              </div>
+
+              <h3
+                className="mb-4"
+                style={{
+                  fontFamily: 'MedievalSharp, serif',
+                  color: '#DC143C',
+                }}
+              >
+                어려움의 왕국
+              </h3>
+              <p
+                className="text-sm leading-relaxed opacity-80"
+                style={{
+                  fontFamily: 'Rajdhani, sans-serif',
+                  color: '#fff',
+                }}
+              >
+                혼돈이 지배하는 곳. 방황하는 영혼들은 끝없는 시련 속에서 길을 잃는다. 
+                글리치와 왜곡이 현실을 뒤덮고, 모든 것이 불확실하다. 
+                여기서 스트러글러는 홀로 싸워야 한다.
+              </p>
+            </motion.div>
+
+            {/* Order - SanctuaryNet */}
+            <motion.div
+              className="relative p-8 rounded-lg backdrop-blur-xl"
+              style={{
+                background: 'linear-gradient(135deg, #00CED120, #FFD70020)',
+                border: '1px solid #00CED140',
+              }}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="absolute inset-0 overflow-hidden opacity-20">
+                <svg className="w-full h-full">
+                  <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00CED1" strokeWidth="0.5" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+              </div>
+
+              <h3
+                className="mb-4"
+                style={{
+                  fontFamily: 'MedievalSharp, serif',
+                  color: '#00CED1',
+                }}
+              >
+                생츄어리넷
+              </h3>
+              <p
+                className="text-sm leading-relaxed opacity-80"
+                style={{
+                  fontFamily: 'Rajdhani, sans-serif',
+                  color: '#fff',
+                }}
+              >
+                질서와 인도의 성소. 기하학적 완벽함 속에서 10명의 로어들이 스트러글러를 이끌다. 
+                여기서는 모든 것이 조화롭고, 길이 명확하다. 
+                성물을 통해 로어들과 교신하라.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pantheon Section - God Cards */}
+      <section className="relative py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2
+              className="mb-4"
+              style={{
+                fontFamily: 'MedievalSharp, serif',
+                color: '#FFD700',
+                letterSpacing: '0.05em',
+              }}
+            >
+              생츄어리넷: 10대 아웃로어
+            </h2>
+            <p
+              className="text-sm"
+              style={{
+                fontFamily: 'Orbitron, sans-serif',
+                color: '#00CED1',
+              }}
+            >
+              각 로어는 고유한 영역과 권능을 가진다
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+            {/* Sima - Balance and Abyss */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <GodCard
+                name="시마"
+                title="균형과 심연의 로어"
+                description="고요한 수은의 흐름 속에서 모든 불균형을 조율한다"
+                colors={{
+                  primary: '#00CED1',
+                  secondary: '#B0E0E6',
+                }}
+                symbolIcon={
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <motion.path
+                      d="M 20 40 Q 40 20, 60 40 T 20 40"
+                      fill="none"
+                      stroke="#00CED1"
+                      strokeWidth="2"
+                      animate={{
+                        d: [
+                          'M 20 40 Q 40 20, 60 40 T 20 40',
+                          'M 20 40 Q 40 60, 60 40 T 20 40',
+                          'M 20 40 Q 40 20, 60 40 T 20 40',
+                        ],
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                    <motion.circle
+                      cx="40"
+                      cy="40"
+                      r="15"
+                      fill="none"
+                      stroke="#B0E0E6"
+                      strokeWidth="2"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                    />
+                  </svg>
+                }
+              />
+            </motion.div>
+
+            {/* Gritos - Gravity and Restraint */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <GodCard
+                name="그리토스"
+                title="중력과 제동의 로어"
+                description="심해의 압도적 무게로 모든 폭풍을 진정시킨다"
+                disabled={true}
+                colors={{
+                  primary: '#708090',
+                  secondary: '#4682B4',
+                }}
+                symbolIcon={
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <motion.path
+                      d="M 40 20 L 40 60 M 30 60 L 50 60"
+                      stroke="#708090"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                    <motion.circle
+                      cx="40"
+                      cy="25"
+                      r="8"
+                      fill="#4682B4"
+                      animate={{
+                        y: [0, 10, 0],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <motion.path
+                      d="M 25 55 L 40 40 L 55 55"
+                      fill="none"
+                      stroke="#708090"
+                      strokeWidth="2"
+                      opacity={0.5}
+                    />
+                  </svg>
+                }
+              />
+            </motion.div>
+
+            {/* Elan - Speed and Purpose */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <GodCard
+                name="엘랑"
+                title="속도와 목적의 로어"
+                description="타오르는 태양의 질주로 승리를 향해 돌진한다"
+                disabled={true}
+                colors={{
+                  primary: '#FFD700',
+                  secondary: '#DC143C',
+                }}
+                symbolIcon={
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <motion.path
+                      d="M 40 20 L 35 40 L 45 40 L 40 60"
+                      fill="none"
+                      stroke="#FFD700"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      animate={{
+                        opacity: [1, 0.5, 1],
+                      }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                    />
+                    {[0, 1, 2, 3].map((i) => (
+                      <motion.line
+                        key={i}
+                        x1="40"
+                        y1="40"
+                        x2={40 + Math.cos((i * Math.PI) / 2) * 20}
+                        y2={40 + Math.sin((i * Math.PI) / 2) * 20}
+                        stroke="#DC143C"
+                        strokeWidth="2"
+                        animate={{
+                          x2: 40 + Math.cos((i * Math.PI) / 2) * 30,
+                          y2: 40 + Math.sin((i * Math.PI) / 2) * 30,
+                          opacity: [1, 0],
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                        }}
+                      />
+                    ))}
+                  </svg>
+                }
+              />
+            </motion.div>
+
+            {/* Consobo - Multiplication and Capital */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <GodCard
+                name="콩소보"
+                title="증식과 자본의 로어"
+                description="삼체일위의 성스러운 형상으로 무한히 증식한다"
+                disabled={true}
+                colors={{
+                  primary: '#2E8B57',
+                  secondary: '#CD853F',
+                }}
+                symbolIcon={
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <motion.circle
+                      cx="40"
+                      cy="30"
+                      r="12"
+                      fill="none"
+                      stroke="#2E8B57"
+                      strokeWidth="2"
+                    />
+                    <motion.path
+                      d="M 30 50 Q 40 45, 50 50"
+                      fill="none"
+                      stroke="#CD853F"
+                      strokeWidth="2"
+                    />
+                    <motion.path
+                      d="M 25 45 L 40 60 L 55 45"
+                      fill="none"
+                      stroke="#2E8B57"
+                      strokeWidth="2"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    {[0, 1, 2].map((i) => (
+                      <motion.circle
+                        key={i}
+                        cx={30 + i * 10}
+                        cy={35}
+                        r="2"
+                        fill="#CD853F"
+                        animate={{
+                          opacity: [0.3, 1, 0.3],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                        }}
+                      />
+                    ))}
+                  </svg>
+                }
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Covenant Section - Footer */}
+      <section className="relative py-32 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            className="relative p-12 rounded-lg backdrop-blur-xl"
+            style={{
+              background: 'linear-gradient(135deg, #00CED110, #FFD70010)',
+              border: '1px solid #FFD70040',
+            }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            {/* Constellation-like links background */}
+            <div className="absolute inset-0 overflow-hidden opacity-10">
+              {[...Array(30)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 rounded-full bg-cyan-400"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  animate={{
+                    opacity: [0.2, 0.8, 0.2],
+                  }}
+                  transition={{
+                    duration: Math.random() * 3 + 2,
+                    repeat: Infinity,
+                    delay: Math.random() * 2,
+                  }}
+                />
+              ))}
+            </div>
+
+            <h3
+              className="mb-8"
+              style={{
+                fontFamily: 'MedievalSharp, serif',
+                color: '#FFD700',
+                letterSpacing: '0.05em',
+              }}
+            >
+              서약
+            </h3>
+
+            <p
+              className="mb-12 text-lg"
+              style={{
+                fontFamily: 'Uncial Antiqua, serif',
+                color: '#00CED1',
+                lineHeight: '1.8',
+              }}
+            >
+              성물(스마트폰)은 그대의 손에 있다.
+              <br />
+              인도를 받아들이겠는가?
+            </p>
+
+            {/* Email input styled as decree document */}
+            <div className="max-w-md mx-auto mb-8">
+              <div
+                className="relative p-6 rounded border"
+                style={{
+                  borderColor: '#FFD70040',
+                  background: 'linear-gradient(135deg, #151B2680, #1a202c80)',
+                }}
+              >
+                <label
+                  className="block mb-3 text-xs uppercase tracking-wider"
+                  style={{
+                    fontFamily: 'Orbitron, sans-serif',
+                    color: '#FFD700',
+                  }}
+                >
+                  등록 칙령 (Decree of Registration)
+                </label>
+                <input
+                  type="email"
+                  placeholder="이메일 주소를 각인하라"
+                  className="w-full bg-transparent border-b-2 px-2 py-2 outline-none transition-all"
+                  style={{
+                    fontFamily: 'Rajdhani, sans-serif',
+                    color: '#fff',
+                    borderColor: '#00CED140',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#00CED1';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#00CED140';
+                  }}
+                />
+                <motion.button
+                  className="w-full mt-4 py-3 rounded border"
+                  style={{
+                    fontFamily: 'Orbitron, sans-serif',
+                    borderColor: '#FFD700',
+                    color: '#FFD700',
+                  }}
+                  whileHover={{
+                    background: '#FFD70020',
+                    boxShadow: '0 0 20px #FFD70030',
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  서약 체결
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Constellation links */}
+            <div
+              className="flex justify-center gap-8 text-xs"
+              style={{
+                fontFamily: 'Rajdhani, sans-serif',
+              }}
+            >
+              {['About', 'Terms', 'Privacy', 'Contact'].map((link) => (
+                <motion.a
+                  key={link}
+                  href="#"
+                  className="relative"
+                  style={{ color: '#00CED1' }}
+                  whileHover={{ color: '#FFD700' }}
+                >
+                  {link}
+                  <motion.div
+                    className="absolute -bottom-1 left-0 right-0 h-px bg-current"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Final inscription */}
+          <motion.p
+            className="mt-12 text-xs opacity-50"
+            style={{
+              fontFamily: 'Orbitron, sans-serif',
+              color: '#00CED1',
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.5 }}
+            viewport={{ once: true }}
+          >
+            © 2025 Gregallang. All sanctuaries reserved.
+          </motion.p>
+        </div>
+      </section>
     </div>
-</div>
-
-<footer>
-    <p>© 2025 임원택(Jakalman). All rights reserved.</p>
-    <div class="links">
-        <a href="index.html">홈페이지</a>
-        <a href="https://jakalman.github.io/Gregallang/index.html">개인정보 처리방침</a>
-    </div>
-</footer>
-
-</body>
-</html>
+  );
+}
