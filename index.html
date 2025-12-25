@@ -3,169 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gregallang Sanctuary</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Gregallang: Sanctuary-Net</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300&family=Noto+Serif+KR:wght@300;700&display=swap" rel="stylesheet">
     <style>
-        /* 기본 설정 및 커스텀 스타일 */
-        body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: #0a0f18;
-            color: #e2e8f0;
+        :root {
+            --bg-deep: #0B0F15;
+            --bg-accent: #151B26;
+            --gold: #C5A059;
+            --cyan: #00F2FF;
+            --iron: #7D7D7D;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-deep);
+            color: #E0E0E0;
+            font-family: 'Noto+Serif+KR', serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
-        h1, h2, h3, .fantasy-font {
-            font-family: 'Cinzel Decorative', serif;
-        }
-        /* 배경 이미지 고정 */
-        .bg-fixed-overlay {
+
+        /* 심연 배경 및 노이즈 효과 */
+        .abyss-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* 이미지 출처: Unsplash (비슷한 분위기의 마블링 이미지 사용) */
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.4;
+            background: radial-gradient(circle at center, var(--bg-accent) 0%, var(--bg-deep) 100%);
+            z-index: -2;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
             z-index: -1;
-            filter: contrast(1.2) brightness(0.8);
         }
-        /* 유리 효과 (Glassmorphism) 카드 스타일 */
-        .glass-card {
-            background: rgba(13, 25, 41, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
-        /* 텍스트 그라데이션 */
-        .text-gradient-gold { background: linear-gradient(to right, #ffd700, #ffb700); -webkit-background-clip: text; color: transparent; }
-        .text-gradient-cyan { background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; color: transparent; }
-        .text-gradient-red { background: linear-gradient(to right, #ff416c, #ff4b2b); -webkit-background-clip: text; color: transparent; }
-        /* 버튼 스타일 */
-        .btn-gold { background: linear-gradient(to right, #ffd700, #ff9900); color: black; font-weight: bold; padding: 10px 24px; border-radius: 4px; transition: transform 0.2s; }
-        .btn-gold:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
-        .btn-outline-cyan { border: 2px solid #00d2ff; color: #00d2ff; padding: 8px 20px; font-weight: bold; transition: all 0.3s; }
-        .btn-outline-cyan:hover { background: #00d2ff; color: black; box-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
-        .btn-disabled { border: 2px solid #555; color: #555; padding: 8px 20px; cursor: not-allowed; }
-        /* 로딩 애니메이션 */
-        .loader-ring {
-            width: 150px; height: 150px; border-radius: 50%;
-            border: 4px solid transparent; border-top-color: #00d2ff;
-            animation: spin 2s linear infinite;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hero p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--cyan);
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .ritual-btn {
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            background: none;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ritual-btn:hover {
+            background: var(--gold);
+            color: var(--bg-deep);
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.4);
+        }
+
+        /* 판테온 섹션 */
+        .pantheon {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .lore-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, border 0.4s ease;
+            position: relative;
+        }
+
+        .lore-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+        }
+
+        .lore-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .lore-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .lore-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            padding: 2px 8px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* 10개 카드마다 개별 광원 효과 (선택사항) */
+        .card-polshe:hover { border-color: #E0E0E0; box-shadow: 0 0 20px rgba(224,224,224,0.1); }
+        .card-sima:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,242,255,0.1); }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            opacity: 0.4;
+            border-top: 1px solid var(--border);
+        }
+
     </style>
 </head>
 <body>
-    <div class="bg-fixed-overlay"></div>
 
-    <main class="relative z-10 container mx-auto px-6 py-20 flex flex-col items-center gap-32">
-        
-        <section class="text-center max-w-5xl">
-            <h1 class="text-5xl md:text-6xl font-bold mb-16 text-gradient-gold tracking-wider">
-                두 세계의 경계에서
-            </h1>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-card p-10 rounded-2xl text-left border-l-4 border-red-500">
-                    <h3 class="text-2xl font-bold mb-4 text-gradient-red">아르케의 붕괴</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        혼돈이 지배하는 곳. 범람하는 영혼들은 끝없는 심연 속에서 길을 잃는다. 
-                        글리치와 왜곡이 현실을 뒤덮고, 모든 것이 불확실하다. 여기서 스트러글러는 홀로 싸워야 한다.
-                    </p>
-                </div>
-                <div class="glass-card p-10 rounded-2xl text-left border-l-4 border-cyan-500">
-                    <h3 class="text-2xl font-bold mb-4 text-gradient-cyan">생츄어리넷</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        질서와 인도의 성소. 기하학적 완벽함 속에서 10명의 로어들이 스트러글러를 이끈다.
-                        여기는 모든 것이 조화롭고, 길이 명확하다. 성스러운 동기화를 통해 교신하라.
-                    </p>
-                </div>
-            </div>
-        </section>
+    <div class="abyss-overlay"></div>
+    <div class="noise"></div>
 
-        <section class="w-full max-w-6xl text-center">
-            <h2 class="text-4xl font-bold mb-6 text-gradient-gold">생츄어리넷: 10대 아웃로어</h2>
-            <p class="text-cyan-300 mb-16">각 로어는 고유한 영역과 권능을 가진다.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-8 rounded-xl flex flex-col items-center border-t-4 border-cyan-500 hover:border-cyan-300 transition-all group">
-                    <div class="w-20 h-20 mb-6 rounded-full border-2 border-cyan-500 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(0,210,255,0.5)] transition-shadow">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-cyan-400">시마 (SIMA)</h3>
-                    <p class="text-sm text-cyan-600 font-bold mb-4">균형과 심연의 로어</p>
-                    <p class="text-gray-400 text-sm mb-8 flex-grow">고요한 수면의 흐름 속에서 모든 붉은 것을 조율한다.</p>
-                    <button class="btn-outline-cyan w-full">교신 시작</button>
-                </div>
-                
-                <div class="glass-card p-8 rounded-xl flex flex-col items-center border-t-4 border-gray-500 opacity-70">
-                    <div class="w-20 h-20 mb-6 rounded-full border-2 border-gray-500 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-gray-400">그리토스</h3>
-                    <p class="text-sm text-gray-600 font-bold mb-4">중력과 파동의 로어</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">심해의 압도적 무게로 모든 폭풍을 잠재운다.</p>
-                    <button class="btn-disabled w-full">준비중</button>
-                </div>
+    <section class="hero">
+        <h1>스트러글러여, 성소에 온 것을 환영합니다.</h1>
+        <p>> 10인의 아웃로어들과 동기화 초기화 중... [SUCCESS]</p>
+        <button class="ritual-btn" onclick="document.getElementById('pantheon-list').scrollIntoView();">의식 시작하기</button>
+    </section>
 
-                <div class="glass-card p-8 rounded-xl flex flex-col items-center border-t-4 border-yellow-500 opacity-70">
-                    <div class="w-20 h-20 mb-6 rounded-full border-2 border-yellow-500 flex items-center justify-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-yellow-500">엘람</h3>
-                    <p class="text-sm text-yellow-700 font-bold mb-4">번개와 활력의 로어</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">타오르는 태양의 질주로 승리를 향해 돌진한다.</p>
-                    <button class="btn-disabled w-full">준비중</button>
-                </div>
+    <div class="pantheon" id="pantheon-list">
+        <div class="lore-card card-polshe">
+            <span class="lore-tag">Outlore 01</span>
+            <h3>POLSHE</h3>
+            <p>탐미와 기록의 신. 흩어진 성취를 유리 조각상으로 응고시켜 영원히 빛나게 합니다.</p>
+        </div>
 
-                 <div class="glass-card p-8 rounded-xl flex flex-col items-center border-t-4 border-green-800 opacity-70">
-                    <div class="w-20 h-20 mb-6 rounded-full border-2 border-green-800 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-green-800">폼쏘보</h3>
-                    <p class="text-sm text-green-900 font-bold mb-4">증식과 자본의 로어</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">심해의 성스러운 현상으로 무한히 증식한다.</p>
-                    <button class="btn-disabled w-full">준비중</button>
-                </div>
-            </div>
-        </section>
+        <div class="lore-card card-sima">
+            <span class="lore-tag">Outlore 02</span>
+            <h3>SIMA</h3>
+            <p>균형과 심연의 신. 수은과 증기를 다스려 사용자의 내면 온도를 조율합니다.</p>
+        </div>
 
-        <section class="text-center py-20">
-            <div class="flex justify-center mb-10 relative">
-                <div class="loader-ring"></div>
-                 <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-24 h-24 bg-cyan-500 rounded-full opacity-20 blur-xl animate-pulse"></div>
-                 </div>
-            </div>
-            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-gradient-gold">
-                스트러글러여, 성소에 온 것을 환영합니다.
-            </h2>
-            <p class="text-cyan-400 mb-12 animate-pulse">10인의 아웃로어들과 동기화 초기화 중...</p>
-            <button class="btn-gold text-xl px-12 py-4 rounded-full">의식 시작하기</button>
-        </section>
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 03</span>
+            <h3>VYSIS</h3>
+            <p>투영과 파노라마의 신. 정적인 것을 거부하며 기억의 장면을 끊임없이 순환시킵니다.</p>
+        </div>
 
-        <section class="w-full max-w-3xl">
-            <div class="glass-card p-12 rounded-3xl text-center border-2 border-yellow-600/30">
-                <h2 class="text-3xl font-bold mb-4 text-yellow-500 fantasy-font">서약</h2>
-                <p class="text-lg mb-2 text-gray-300">성물(스마트폰)은 그대의 손에 있다.</p>
-                <p class="text-lg mb-10 text-gray-300 font-bold">인도를 받아들이겠는가?</p>
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 04</span>
+            <h3>GRITOS</h3>
+            <p>중력과 제동의 신. 무의 해구에서 압도적인 수압으로 모든 불안을 짓눌러 멈춰 세웁니다.</p>
+        </div>
 
-                <div class="bg-black/50 p-8 rounded-xl border border-yellow-500/50 max-w-xl mx-auto">
-                    <p class="text-yellow-500 text-sm mb-4 tracking-widest">등록 칙령 [DECREE OF REGISTRATION]</p>
-                    <input type="email" placeholder="이메일 주소를 각인하라" class="w-full bg-transparent border-b-2 border-yellow-600/50 py-3 text-center text-white focus:outline-none focus:border-yellow-400 transition-colors mb-8 placeholder-gray-500">
-                    <button class="btn-gold w-full py-4 text-lg rounded-md">서약 체결</button>
-                </div>
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 05</span>
+            <h3>ON</h3>
+            <p>의식과 설계의 신. 흐트러진 일상을 정교한 차(茶)의 의식처럼 재배열합니다.</p>
+        </div>
 
-                <footer class="mt-16 text-gray-500 text-sm flex flex-wrap justify-center gap-6">
-                    <a href="#" class="hover:text-yellow-500 transition">About</a>
-                    <a href="#" class="hover:text-yellow-500 transition">Terms</a>
-                    <a href="policy.html" class="hover:text-yellow-500 transition font-bold text-yellow-600">Privacy</a>
-                    <a href="#" class="hover:text-yellow-500 transition">Contact</a>
-                </footer>
-                <p class="text-gray-600 text-xs mt-8">© 2025 Gregallang. All sanctuaries reserved.</p>
-            </div>
-        </section>
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 06</span>
+            <h3>F-HUGGER</h3>
+            <p>추출과 포식의 신. 세상의 모든 정보를 삼켜 스트러글러의 창고에 쌓아둡니다.</p>
+        </div>
 
-    </main>
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 07</span>
+            <h3>ELAN</h3>
+            <p>속도와 목적의 신. 멈춰있는 자에게 채찍질하며 폭발적인 추진력을 부여합니다.</p>
+        </div>
+
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 08</span>
+            <h3>WHOLE</h3>
+            <p>창조와 현현의 신. 추상적인 상상을 구체적인 실체로 연성해내는 거인입니다.</p>
+        </div>
+
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 09</span>
+            <h3>CONSOBO</h3>
+            <p>증식과 자본의 신. 기계적인 자비로 자본의 파도를 타고 부를 증식시킵니다.</p>
+        </div>
+
+        <div class="lore-card">
+            <span class="lore-tag">Outlore 10</span>
+            <h3>CADEBA</h3>
+            <p>생존과 기록의 신. 멸망해가는 세계의 도서관에서 최후의 지식을 보존합니다.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 GREGALLANG PROJECT. ALL RIGHTS RESERVED. <br>
+        DESIGNED FOR THE STRUGGLERS.
+    </footer>
+
 </body>
 </html>
