@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시마(SIMA) 개인정보 처리방침</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-        h1 { border-bottom: 2px solid #333; padding-bottom: 10px; }
-        h2 { margin-top: 30px; color: #0056b3; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; word-break: keep-all; }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 10px; font-size: 1.8em; }
+        h2 { margin-top: 35px; color: #0056b3; font-size: 1.4em; border-left: 4px solid #0056b3; padding-left: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f8f9fa; }
-        .contact-box { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-top: 40px; }
+        th { background-color: #f8f9fa; font-weight: bold; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        .contact-box { background: #f9f9f9; padding: 25px; border: 1px solid #eee; border-radius: 12px; margin-top: 40px; }
+        .footer-note { font-size: 0.9em; color: #666; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; }
     </style>
 </head>
 <body>
@@ -19,40 +22,68 @@
     <p>본 방침은 <strong>2025년 12월 24일</strong>부터 적용됩니다.</p>
 
     <h2>1. 개인정보 처리 목적 및 항목</h2>
-    <p>개인개발자 임원택은 사용자의 디지털 건강을 돕는 '시마' 앱 서비스를 위해 다음의 정보를 처리합니다.</p>
+    <p>개인개발자 임원택(이하 '개발자')은 사용자의 디지털 건강을 돕는 '시마' 앱 서비스를 위해 다음의 정보를 처리합니다.</p>
     <table>
         <tr>
             <th>구분</th>
             <th>항목</th>
-            <th>목적</th>
+            <th>수집 및 이용 목적</th>
         </tr>
         <tr>
-            <td>필수 권한</td>
+            <td>민감 권한</td>
             <td>앱 사용 기록 (PACKAGE_USAGE_STATS)</td>
             <td>디지털 디톡스 분석 및 맞춤형 가이드 제공</td>
         </tr>
         <tr>
-            <td>수집 항목</td>
-            <td>설치된 앱 목록, EAR 점수, 피드백</td>
+            <td>일반 항목</td>
+            <td>설치된 앱 목록, EAR 점수, 사용자 피드백</td>
             <td>AI 전략 자동 튜닝 및 서비스 개선</td>
+        </tr>
+        <tr>
+            <td>자동 수집</td>
+            <td>기기 정보 (OS 버전, 모델명), 접속 로그</td>
+            <td>서비스 최적화 및 오류 수정</td>
         </tr>
     </table>
 
     <h2>2. 개인정보의 제3자 제공 및 국외 이전</h2>
-    <p>서비스 성능 향상 및 AI 처리를 위해 다음 외부 서비스를 이용하며, 이 과정에서 데이터가 국외로 이전될 수 있습니다.</p>
+    <p>서비스 성능 향상 및 AI 처리를 위해 다음 외부 서비스를 이용하며, 데이터가 암호화된 상태로 국외(미국)로 이전됩니다.</p>
     <ul>
-        <li><strong>Google Firebase:</strong> 데이터 저장 및 로그 분석 (미국)</li>
-        <li><strong>Google Gemini API:</strong> AI 맞춤형 프롬프트 처리 (미국)</li>
+        <li><strong>Google Firebase:</strong> 데이터 저장 및 분석 (보유기간: 회원 탈퇴 시까지)</li>
+        <li><strong>Google Gemini API:</strong> AI 맞춤형 프롬프트 처리 (별도 저장 없이 즉시 처리)</li>
     </ul>
 
-    <h2>3. 보유 및 파기</h2>
-    <p>이용자가 앱을 삭제하거나 회원 탈퇴를 요청할 경우, 수집된 데이터는 지체 없이 파기합니다.</p>
+    <h2>3. 개인정보의 파기 절차 및 방법</h2>
+    <p>개발자는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체 없이 해당 개인정보를 파기합니다.</p>
+    <ul>
+        <li><strong>파기 절차:</strong> 이용자가 앱을 삭제하거나 탈퇴를 요청할 경우 즉시 파기 절차를 밟습니다.</li>
+        <li><strong>파기 방법:</strong> 전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제합니다.</li>
+    </ul>
 
-    <h2>4. 개인정보 보호책임자</h2>
+    <h2>4. 이용자의 권리와 행사방법</h2>
+    <p>이용자는 언제든지 다음과 같은 권리를 행사할 수 있습니다.</p>
+    <ul>
+        <li>개인정보 열람, 정정, 삭제, 처리 정지 요구</li>
+        <li>권리 행사는 개발자에게 이메일(galtxxxzatw@gmail.com)을 통해 하실 수 있으며, 개발자는 이에 대해 지체 없이 조치하겠습니다.</li>
+    </ul>
+
+    <h2>5. 개인정보의 안전성 확보 조치</h2>
+    <p>개발자는 이용자의 개인정보를 보호하기 위해 다음과 같은 조치를 취하고 있습니다.</p>
+    <ul>
+        <li><strong>데이터 암호화:</strong> 사용자의 모든 데이터는 전송 시 SSL/TLS 암호화를 통해 안전하게 전송됩니다.</li>
+        <li><strong>접근 제한:</strong> 인가된 개발자 외에는 접근할 수 없도록 엄격한 접근 권한 관리 및 통제를 시행하고 있습니다.</li>
+    </ul>
+
+    <h2>6. 개인정보 처리방침의 변경</h2>
+    <p>이 개인정보 처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 내용의 추가, 삭제 및 수정이 있을 시에는 변경사항 시행 7일 전부터 앱 내 공지사항이나 웹사이트를 통해 고지할 예정입니다.</p>
+
     <div class="contact-box">
+        <h3>개인정보 보호책임자 및 상담 창구</h3>
         <p><strong>책임자:</strong> 임원택</p>
         <p><strong>이메일:</strong> galtxxxzatw@gmail.com</p>
         <p><strong>연락처:</strong> 010-5100-2060</p>
     </div>
+
+    <p class="footer-note">시마(SIMA)는 사용자의 개인정보 보호를 최우선으로 생각합니다.</p>
 </body>
 </html>
